@@ -1,3 +1,11 @@
+# -- Alternatively, if the beginning of this file has the line
+# '#!/usr/bin/env ansible-playbook', we can execute this playbook
+# as './web-tls.yml'
+#
+# ansible-doc is a great command to learn about ansible modules
+#
+# I created the cert and key running
+# openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -subj /CN=localhost -keyout files/nginx.key -out files/nginx.crt
 ---
 - name: Configure webserver with nginx and tls
   hosts: webservers
