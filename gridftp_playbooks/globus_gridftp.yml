@@ -1,0 +1,19 @@
+---
+- name: Install the GridFTP module from Globus Toolkit
+  hosts: gridftp_servers, gridftp_clients
+  become: True
+  become_method: sudo
+  vars:
+    globus_repository: http://toolkit.globus.org/ftppub/gt6/installers/repo/globus-toolkit-repo_latest_all.deb
+  tasks:
+    - name: Download the Globus Repository
+      get_url:
+        url: "{{ globus_repository }}"
+        dest: /home/vagrant
+    - name: Install the Globus repository
+      apt:
+        deb: /home/vagrant/{{ globus_repository | basename }}
+    - name: Install the GridFTP package
+      apt:
+        name: globus-gridftp
+        update_cache: yes

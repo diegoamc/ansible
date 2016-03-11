@@ -1,0 +1,10 @@
+---
+- name: Configure GridFTP servers
+  hosts: gridftp_servers
+  become: True
+  become_method: sudo
+  tasks:
+    - name: Copy GridFTP server configuration file
+      copy:
+        src: files/gridftp_server.conf
+        dest: /etc/gridftp.conf
