@@ -12,14 +12,23 @@ Vagrant.configure(2) do |config|
 	config.vm.define "vagrant1" do |vagrant1|
 		vagrant1.vm.box = "ubuntu/trusty64"
 		vagrant1.vm.network :forwarded_port, guest: 5000, host: 8080
+		# globus-gridftp-server -aa -p 5000 -port-range "50002,50003" -data-interface "10.10.10.1"
+		vagrant1.vm.network :forwarded_port, guest: 50002, host: 50002
+		vagrant1.vm.network :private_network, ip: "10.10.10.1"
 	end
 
 	config.vm.define "vagrant2" do |vagrant2|
 		vagrant2.vm.box = "ubuntu/trusty64"
 		vagrant2.vm.network :forwarded_port, guest: 5000, host: 8081
+		# globus-gridftp-server -aa -p 5000 -port-range "50004,50005" -data-interface "10.10.10.2"
+		vagrant2.vm.network :forwarded_port, guest: 50004, host: 50004
+		vagrant2.vm.network :private_network, ip: "10.10.10.2"
 	end
 
 	config.vm.define "vagrant3" do |vagrant3|
+		# globus-url-copy -dbg file:///path/to/file ftp://<server_ip>:<server_control_channel_port>/path/to/file
+		# globus-url-copy -dbg ftp://<origin_server_ip>:<origin_server_control_channel_port>/path/to/file  ftp://<dest_server_ip>:<dest_server_channel_port>/path/to/file
 		vagrant3.vm.box = "ubuntu/trusty64"
+		vagrant3.vm.network :private_network, ip: "10.10.10.3"
 	end
 end
